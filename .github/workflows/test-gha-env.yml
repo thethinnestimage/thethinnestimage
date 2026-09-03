@@ -1,0 +1,14 @@
+name: Test github action enviroment
+
+on:
+  workflow_dispatch: 
+
+jobs:
+  ubuntu:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Dump installed packages
+        run: dpkg -l --no-pager
+      - name: Dump env
+        run: /usr/bin/env
