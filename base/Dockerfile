@@ -1,6 +1,6 @@
 # FROM ubuntu:24.04 AS bootstrap
 
-FROM thethinnestimage/base AS bootstrap
+FROM docker.io/thethinnestimage/base AS bootstrap
 
 RUN --mount=type=cache,target=/var/cache/apt,id=thethinnestimage-apt-cache \
     --mount=type=cache,target=/var/lib/apt,id=thethinnestimage-apt-lib-cache \
