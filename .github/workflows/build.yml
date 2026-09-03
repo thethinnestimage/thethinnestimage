@@ -21,10 +21,8 @@ jobs:
         registries:
           - registry: ghcr.io
             username: ${{ github.actor }}
-            password: ${{ secrets.DOCKER_PAT }}
           - registry: docker.io
             username: thethinnestimage
-            password: ${{ secrets.DOCKER_PAT }}
   
     steps:
       - name: Checkout repository
@@ -45,4 +43,4 @@ jobs:
         with:
           registry: ${{ matrix.registries.registry }}
           username: ${{ matrix.registries.username }}
-          password: ${{ matrix.registries.password }}
+          password: ${{ matrix.registries.registry == 'docker.io' && secrets.DOCKER_PAT || secrets.GITHUB_TOKEN }}
