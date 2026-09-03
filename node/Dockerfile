@@ -1,0 +1,8 @@
+FROM thethinnestimage/base
+
+ARG PM
+
+RUN --mount=type=cache,target=/var/cache/apt,id=thethinnestimage-apt-cache \
+    --mount=type=cache,target=/var/lib/apt,id=thethinnestimage-apt-lib-cache \
+    --mount=type=bind,source=shared/scripts/apt-install.sh,target=/tmp/apt-install.sh \
+    sh /tmp/apt-install.sh nodejs ${PM}
