@@ -12,6 +12,8 @@ jobs:
         run: dpkg -l --no-pager
       - name: Dump env
         run: /usr/bin/env
+      - name: test cosign
+        run: cosign version
   windows:
     runs-on: windows-latest
     steps:
@@ -19,3 +21,5 @@ jobs:
         shell: pwsh
         run: |
           Get-ChildItem Env: | Sort-Object Name | ForEach-Object { "$($_.Name)=$($_.Value)" }
+      - name: test cosign
+        run: cosign version
