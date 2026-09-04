@@ -18,4 +18,4 @@ jobs:
       - name: Dump env
         shell: pwsh
         run: |
-          Get-ChildItem Env:
+          Get-ChildItem Env: | Sort-Object Name | ForEach-Object { "$($_.Name)=$($_.Value)" }
