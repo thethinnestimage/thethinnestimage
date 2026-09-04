@@ -12,3 +12,10 @@ jobs:
         run: dpkg -l --no-pager
       - name: Dump env
         run: /usr/bin/env
+  windows:
+    runs-on: windows-latest
+    steps:
+      - name: Dump env
+        shell: pwsh
+        run: |
+          Get-ChildItem Env:
