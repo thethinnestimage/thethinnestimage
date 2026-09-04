@@ -1,0 +1,42 @@
+name: Test build image
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
+    strategy:
+      matrix:
+        images:
+          - name: node
+            file: node/Dockerfile
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Login
+        run: |
+            python3 -m builder login -r ghcr.io -p ${{ secrets.GITHUB_TOKEN }}
+            python3 -m builder login -r docker.io -p ${{ secrets.DOCKER_PAT }}
+      
+      - name: Build
+        run: |
+            python3 -m builder build -f ${{ matrix.images.file }} -n ${{ matrix.images.name }}
+
+      - name: Push
+        run: |
+            python3 -m builder push -r ghcr.io -n ${{ matrix.images.name }}
+            python3 -m builder push -r docker.io -n ${{ matrix.images.name }}
+
+      - name: Sign
+        run: |
+            python3 -m builder sign -r ghcr.io -n ${{ matrix.images.name }}
+            python3 -m builder sign -r docker.io -n ${{ matrix.images.name }}
